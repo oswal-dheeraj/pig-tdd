@@ -91,6 +91,32 @@ class TestPig(unittest.TestCase):
             }
         )
 
+    @mock.patch('__builtin__.print')
+    def test_winning(self, fake_print):
+        """A player wins when they earn 100 points"""
+
+        INPUT.side_effect = [
+            # player names
+            'George',
+            'Bob',
+            '',
+            # roll or hold
+            'r', 'r', # George
+        ]
+        pig = game.pig.Pig(*game.pig.get_player_names())
+        pig.roll = mock.Mock(side_effect=[2, 2])
+        pig.scores['George'] = 97
+        pig.scores['Bob'] = 96
+        pig.play()
+        self.assertEqual(
+            pig.get_score(),
+            {
+                'George': 101,
+                'Bob': 96
+            }
+        )
+        fake_print.assert_called_with('George won the game with 101 points!')
+
 
 if __name__ == '__main__':
     unittest.main()
