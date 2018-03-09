@@ -11,3 +11,7 @@ class Pig:
     def roll(self):
         """Return a number between 1 and 6"""
         return random.randint(1, 6)
+
+    def get_score(self):
+        """Return the score for all players"""
+        pass

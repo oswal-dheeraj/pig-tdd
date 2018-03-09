@@ -17,6 +17,18 @@ class TestPig(unittest.TestCase):
         self.assertIsInstance(r, int)
         self.assertTrue(1 <= r <= 6)
 
+    def test_scores(self):
+        """Player scores can be retrieved"""
+        pig = game.pig.Pig('PlayerA', 'PlayerB', 'PlayerC')
+        self.assertEqual(
+            pig.get_score(),
+            {
+                'PlayerA': 0,
+                'PlayerB': 0,
+                'PlayerC': 0
+            }
+        )
+
 
 if __name__ == '__main__':
     unittest.main()
