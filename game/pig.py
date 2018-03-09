@@ -1,4 +1,5 @@
 import random
+from itertools import cycle
 
 
 class Pig:
@@ -30,6 +31,24 @@ class Pig:
                 action = 'hold'
                 break
         return action
+
+    def play(self):
+        """Start a game of Pig"""
+        for player in cycle(self.players):
+            print('Now rolling: {}'.format(player))
+            action = 'roll'
+            turn_points = 0
+            while action == 'roll':
+                value = self.roll()
+                if value == 1:
+                    print('{} rolled a 1 and lost {} points'.format(player, turn_points))
+                    break
+                turn_points += value
+                print('{} rolled a {} and now has {} points for this turn'.format(
+                    player, value, turn_points
+                ))
+                action = self.roll_or_hold()
+            self.scores[player] += turn_points
 
 
 def get_player_names():
