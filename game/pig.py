@@ -42,6 +42,7 @@ class Pig:
                 value = self.roll()
                 if value == 1:
                     print('{} rolled a 1 and lost {} points'.format(player, turn_points))
+                    turn_points = 0
                     break
                 turn_points += value
                 print('{} rolled a {} and now has {} points for this turn'.format(
