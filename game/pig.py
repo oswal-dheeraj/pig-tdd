@@ -18,6 +18,19 @@ class Pig:
         """Return the score for all players"""
         return self.scores
 
+    def roll_or_hold(self):
+        """Return 'roll' or 'hold' based on user input"""
+        action = ''
+        while True:
+            value = input('(R)oll or (H)old? ')
+            if value.lower() == 'r':
+                action = 'roll'
+                break
+            elif value.lower() == 'h':
+                action = 'hold'
+                break
+        return action
+
 
 def get_player_names():
     """Prompt for player names"""
