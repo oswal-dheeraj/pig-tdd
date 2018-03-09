@@ -69,3 +69,11 @@ def get_player_names():
             break
         names.append(value)
     return names
+
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()

@@ -1,5 +1,6 @@
 import unittest
 import mock
+from itertools import cycle
 
 import game.pig
 
@@ -101,7 +102,7 @@ class TestPig(unittest.TestCase):
             'Bob',
             '',
             # roll or hold
-            'r', 'r', # George
+            'r', 'r',  # George
         ]
         pig = game.pig.Pig(*game.pig.get_player_names())
         pig.roll = mock.Mock(side_effect=[2, 2])
@@ -116,6 +117,42 @@ class TestPig(unittest.TestCase):
             }
         )
         fake_print.assert_called_with('George won the game with 101 points!')
+
+    def test_command_line(self):
+        """The game can be invoked from the command line"""
+
+        INPUT.side_effect = [
+            # player names
+            'George',
+            'Bob',
+            '',
+            # roll or hold
+            'r', 'r', 'h',  # George
+            # Bob immediately rolls a 1
+            'r', 'h',  # George
+            'r', 'r', 'h'  # Bob
+        ]
+        with mock.patch('__builtin__.print') as fake_print, \
+                mock.patch.object(game.pig.Pig, 'roll') as die:
+            die.side_effect = cycle([6, 2, 5, 1, 4, 3])
+            self.assertRaises(StopIteration, game.pig.main)
+        # check output
+        fake_print.assert_has_calls([
+            mock.call('Now rolling: George'),
+
+            mock.call('George rolled a 6 and now has 6 points for this turn'),
+            mock.call('George rolled a 2 and now has 8 points for this turn'),
+            mock.call('George rolled a 5 and now has 13 points for this turn'),
+            mock.call('Now rolling: Bob'),
+            mock.call('Bob rolled a 1 and lost 0 points'),
+            mock.call('Now rolling: George'),
+            mock.call('George rolled a 4 and now has 4 points for this turn'),
+            mock.call('George rolled a 3 and now has 7 points for this turn'),
+            mock.call('Now rolling: Bob'),
+            mock.call('Bob rolled a 6 and now has 6 points for this turn'),
+            mock.call('Bob rolled a 2 and now has 8 points for this turn'),
+            mock.call('Bob rolled a 5 and now has 13 points for this turn')
+        ])
 
 
 if __name__ == '__main__':
