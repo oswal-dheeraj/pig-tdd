@@ -61,6 +61,35 @@ class TestPig(unittest.TestCase):
         self.assertEqual(pig.roll_or_hold(), 'hold')
         self.assertEqual(pig.roll_or_hold(), 'roll')
 
+    def test_gameplay(self):
+        """Users may play a game of Pig"""
+
+        INPUT.side_effect = [
+            # player names
+            'George',
+            'Bob',
+            '',
+            # roll or hold
+            'r', 'r',  # George
+            'r', 'r', 'r', 'h',  # Bob
+            'r', 'r', 'r', 'h',  # George
+        ]
+
+        pig = game.pig.Pig(*game.pig.get_player_names())
+        pig.roll = mock.Mock(side_effect=[
+            6, 6, 1,  # George
+            6, 6, 6, 6,  # Bob
+            5, 4, 3, 2,  # George
+        ])
+        self.assertRaises(StopIteration, pig.play)
+        self.assertEqual(
+            pig.get_score(),
+            {
+                'George': 14,
+                'Bob': 24
+            }
+        )
+
 
 if __name__ == '__main__':
     unittest.main()
