@@ -1,3 +1,5 @@
+import random
+
 class Pig:
     def __init__(self, *players):
         self.players = players
@@ -8,4 +10,4 @@ class Pig:
 
     def roll(self):
         """Return a number between 1 and 6"""
-        pass
+        return random.randint(1, 6)
