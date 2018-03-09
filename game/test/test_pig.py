@@ -39,7 +39,6 @@ class TestPig(unittest.TestCase):
 
     def test_get_player_names_stdout(self):
         """Check the prompts for player names"""
-
         with mock.patch('__builtin__.input', side_effect=['A', 'B', '']) as fake:
             game.pig.get_player_names()
         fake.assert_has_calls([
@@ -47,6 +46,16 @@ class TestPig(unittest.TestCase):
             mock.call("Player 2's name: "),
             mock.call("Player 3's name: ")
         ])
+
+    @mock.patch('__builtin__.input')
+    def test_roll_or_hold(self, fake_input):
+        """Player can choose to roll or hold"""
+        fake_input.side_effect = ['R', 'H', 'h', 'z', '12345', 'r']
+        pig = game.pig.Pig('PlayerA', 'PlayerB')
+        self.assertEqual(pig.roll_or_hold(), 'roll')
+        self.assertEqual(pig.roll_or_hold(), 'hold')
+        self.assertEqual(pig.roll_or_hold(), 'hold')
+        self.assertEqual(pig.roll_or_hold(), 'roll')
 
 
 if __name__ == '__main__':
