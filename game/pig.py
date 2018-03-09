@@ -50,6 +50,12 @@ class Pig:
                 print('{} rolled a {} and now has {} points for this turn'.format(
                     player, value, turn_points
                 ))
+                if self.scores[player] + turn_points >= 100:
+                    self.scores[player] += turn_points
+                    print('{} won the game with {} points!'.format(
+                        player, self.scores[player]
+                    ))
+                    return
                 action = self.roll_or_hold()
             self.scores[player] += turn_points
 
