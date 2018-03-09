@@ -37,6 +37,17 @@ class TestPig(unittest.TestCase):
             names = game.pig.get_player_names()
         self.assertEqual(names, ['A', 'M', 'Z'])
 
+    def test_get_player_names_stdout(self):
+        """Check the prompts for player names"""
+
+        with mock.patch('__builtin__.input', side_effect=['A', 'B', '']) as fake:
+            game.pig.get_player_names()
+        fake.assert_has_calls([
+            mock.call("Player 1's name: "),
+            mock.call("Player 2's name: "),
+            mock.call("Player 3's name: ")
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()
