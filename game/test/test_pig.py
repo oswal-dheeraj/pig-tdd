@@ -61,6 +61,7 @@ class TestPig(unittest.TestCase):
         self.assertEqual(pig.roll_or_hold(), 'hold')
         self.assertEqual(pig.roll_or_hold(), 'roll')
 
+    @mock.patch('__builtin__.print', mock.Mock())
     def test_gameplay(self):
         """Users may play a game of Pig"""
 
