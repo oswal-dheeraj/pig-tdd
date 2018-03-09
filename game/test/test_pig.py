@@ -1,3 +1,5 @@
+# Adopted from http://www.codekoala.com/pdfs/tdd.pdf
+
 import unittest
 import mock
 from itertools import cycle
@@ -139,7 +141,6 @@ class TestPig(unittest.TestCase):
         # check output
         fake_print.assert_has_calls([
             mock.call('Now rolling: George'),
-
             mock.call('George rolled a 6 and now has 6 points for this turn'),
             mock.call('George rolled a 2 and now has 8 points for this turn'),
             mock.call('George rolled a 5 and now has 13 points for this turn'),

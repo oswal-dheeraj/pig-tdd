@@ -1,3 +1,5 @@
+# Adopted from http://www.codekoala.com/pdfs/tdd.pdf
+
 from __future__ import print_function
 
 import random
@@ -72,7 +74,9 @@ def get_player_names():
 
 
 def main():
-    pass
+    """Launch a game of Pig"""
+    game = Pig(*get_player_names())
+    game.play()
 
 
 if __name__ == "__main__":
