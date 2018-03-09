@@ -21,4 +21,10 @@ class Pig:
 
 def get_player_names():
     """Prompt for player names"""
-    pass
+    names = []
+    while True:
+        value = input("Player {}'s name: ".format(len(names)+1))
+        if not value:
+            break
+        names.append(value)
+    return names
