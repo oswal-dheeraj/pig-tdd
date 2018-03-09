@@ -1,5 +1,6 @@
 import random
 
+
 class Pig:
     def __init__(self, *players):
         self.players = players
@@ -16,3 +17,8 @@ class Pig:
     def get_score(self):
         """Return the score for all players"""
         return self.scores
+
+
+def get_player_names():
+    """Prompt for player names"""
+    pass

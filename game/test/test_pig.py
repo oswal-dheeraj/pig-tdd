@@ -1,4 +1,5 @@
 import unittest
+import mock
 
 import game.pig
 
@@ -28,6 +29,13 @@ class TestPig(unittest.TestCase):
                 'PlayerC': 0
             }
         )
+
+    def test_get_player_names(self):
+        """Players can enter their names"""
+        fake_input = mock.Mock(side_effect=['A', 'M', 'Z', ''])
+        with mock.patch('__builtin__.input', fake_input):
+            names = game.pig.get_player_names()
+        self.assertEqual(names, ['A', 'M', 'Z'])
 
 
 if __name__ == '__main__':
