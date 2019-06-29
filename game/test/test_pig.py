@@ -1,7 +1,7 @@
 # Adopted from http://www.codekoala.com/pdfs/tdd.pdf
 
 import unittest
-import mock
+from  unittest import mock
 from itertools import cycle
 
 import game.pig
@@ -9,7 +9,7 @@ import game.pig
 INPUT = mock.Mock()
 
 
-@mock.patch('__builtin__.input', INPUT)
+@mock.patch('builtins.input', INPUT)
 class TestPig(unittest.TestCase):
     def setUp(self):
         INPUT.reset_mock()
@@ -64,7 +64,7 @@ class TestPig(unittest.TestCase):
         self.assertEqual(pig.roll_or_hold(), 'hold')
         self.assertEqual(pig.roll_or_hold(), 'roll')
 
-    @mock.patch('__builtin__.print', mock.Mock())
+    @mock.patch('builtins.print', mock.Mock())
     def test_gameplay(self):
         """Users may play a game of Pig"""
 
@@ -94,7 +94,7 @@ class TestPig(unittest.TestCase):
             }
         )
 
-    @mock.patch('__builtin__.print')
+    @mock.patch('builtins.print')
     def test_winning(self, fake_print):
         """A player wins when they earn 100 points"""
 
@@ -134,7 +134,7 @@ class TestPig(unittest.TestCase):
             'r', 'h',  # George
             'r', 'r', 'h'  # Bob
         ]
-        with mock.patch('__builtin__.print') as fake_print, \
+        with mock.patch('builtins.print') as fake_print, \
                 mock.patch.object(game.pig.Pig, 'roll') as die:
             die.side_effect = cycle([6, 2, 5, 1, 4, 3])
             self.assertRaises(StopIteration, game.pig.main)
